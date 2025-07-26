@@ -105,9 +105,30 @@ export default function AttendanceScreen() {
           text: 'Clear',
           style: 'destructive',
           onPress: async () => {
-            console.log('Clearing all attendance for today');
-            setTodayAttendance({});
-            await AsyncStorage.removeItem(`attendance_${today}`);
+            try {
+              console.log('Clearing all attendance for today');
+              
+              // Clear the state
+              setTodayAttendance({});
+              
+              // Remove today's attendance from AsyncStorage
+              await AsyncStorage.removeItem(`attendance_${today}`);
+              
+              // Also remove today's records from attendance history
+              const historyKey = 'attendance_history';
+              const storedHistory = await AsyncStorage.getItem(historyKey);
+              if (storedHistory) {
+                const history = JSON.parse(storedHistory);
+                const filteredHistory = history.filter((record: AttendanceRecord) => record.date !== today);
+                await AsyncStorage.setItem(historyKey, JSON.stringify(filteredHistory));
+                console.log('Attendance history updated - removed records for', today);
+              }
+              
+              console.log('All attendance cleared successfully for', today);
+            } catch (error) {
+              console.error('Error clearing attendance:', error);
+              Alert.alert('Error', 'Failed to clear attendance. Please try again.');
+            }
           },
         },
       ]
