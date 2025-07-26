@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Natively",
-    "slug": "Natively",
+    "name": "attendance-list-uuxosf",
+    "slug": "attendance-list-uuxosf",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/images/natively-dark.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.anonymous.Natively"
+      "package": "com.tfc.attendancelist"
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",

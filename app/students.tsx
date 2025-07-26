@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/Button';
 import { commonStyles, buttonStyles, colors } from '../styles/commonStyles';
 import Icon from '../components/Icon';
+import { t } from '../utils/i18n';
 
 interface Student {
   id: string;
@@ -49,7 +50,7 @@ export default function StudentsScreen() {
 
   const addStudent = async () => {
     if (!newStudentName.trim()) {
-      Alert.alert('Error', 'Please enter a student name');
+      Alert.alert(t('error'), t('enterStudentName'));
       return;
     }
 
@@ -72,12 +73,12 @@ export default function StudentsScreen() {
 
   const deleteStudent = async (studentId: string) => {
     Alert.alert(
-      'Delete Student',
-      'Are you sure you want to delete this student?',
+      t('deleteStudent'),
+      t('deleteStudentConfirm'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             console.log('Deleting student with id:', studentId);
@@ -100,12 +101,12 @@ export default function StudentsScreen() {
       <View style={commonStyles.header}>
         <View style={commonStyles.row}>
           <Button
-            text="← Back"
+            text={t('back')}
             onPress={goBack}
             style={{ backgroundColor: 'transparent', width: 'auto', paddingHorizontal: 0 }}
             textStyle={{ color: colors.primary, fontSize: 16 }}
           />
-          <Text style={commonStyles.title}>Students ({students.length})</Text>
+          <Text style={commonStyles.title}>{t('students')} ({students.length})</Text>
         </View>
       </View>
 
@@ -114,24 +115,24 @@ export default function StudentsScreen() {
           {!isAddingStudent ? (
             <View style={commonStyles.card}>
               <Button
-                text="+ Add New Student"
+                text={t('addNewStudent')}
                 onPress={() => setIsAddingStudent(true)}
                 style={buttonStyles.primary}
               />
             </View>
           ) : (
             <View style={commonStyles.card}>
-              <Text style={commonStyles.subtitle}>Add New Student</Text>
+              <Text style={commonStyles.subtitle}>{t('addNewStudent')}</Text>
               <TextInput
                 style={commonStyles.input}
-                placeholder="Student Name *"
+                placeholder={t('studentName')}
                 value={newStudentName}
                 onChangeText={setNewStudentName}
                 placeholderTextColor={colors.textSecondary}
               />
               <TextInput
                 style={commonStyles.input}
-                placeholder="Email (optional)"
+                placeholder={t('email')}
                 value={newStudentEmail}
                 onChangeText={setNewStudentEmail}
                 keyboardType="email-address"
@@ -139,7 +140,7 @@ export default function StudentsScreen() {
               />
               <View style={commonStyles.row}>
                 <Button
-                  text="Cancel"
+                  text={t('cancel')}
                   onPress={() => {
                     setIsAddingStudent(false);
                     setNewStudentName('');
@@ -149,7 +150,7 @@ export default function StudentsScreen() {
                   textStyle={{ color: colors.primary }}
                 />
                 <Button
-                  text="Add Student"
+                  text={t('addStudent')}
                   onPress={addStudent}
                   style={[buttonStyles.primary, { flex: 1, marginLeft: 8 }]}
                 />
@@ -160,8 +161,8 @@ export default function StudentsScreen() {
           {students.length === 0 ? (
             <View style={[commonStyles.card, commonStyles.centerContent]}>
               <Icon name="people-outline" size={48} style={{ color: colors.textSecondary, marginBottom: 16 }} />
-              <Text style={commonStyles.text}>No students added yet</Text>
-              <Text style={commonStyles.textSecondary}>Add your first student to get started</Text>
+              <Text style={commonStyles.text}>{t('noStudentsYet')}</Text>
+              <Text style={commonStyles.textSecondary}>{t('addFirstStudent')}</Text>
             </View>
           ) : (
             students.map((student) => (
@@ -173,11 +174,11 @@ export default function StudentsScreen() {
                       <Text style={commonStyles.textSecondary}>{student.email}</Text>
                     )}
                     <Text style={commonStyles.textSecondary}>
-                      Added: {new Date(student.createdAt).toLocaleDateString()}
+                      {t('added')}: {new Date(student.createdAt).toLocaleDateString()}
                     </Text>
                   </View>
                   <Button
-                    text="Delete"
+                    text={t('delete')}
                     onPress={() => deleteStudent(student.id)}
                     style={{ backgroundColor: colors.error, width: 'auto', paddingHorizontal: 16 }}
                   />

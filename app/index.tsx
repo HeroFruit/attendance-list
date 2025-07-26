@@ -4,9 +4,22 @@ import { useState, useEffect } from 'react';
 import Button from '../components/Button';
 import { commonStyles, buttonStyles, colors } from '../styles/commonStyles';
 import Icon from '../components/Icon';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import { t } from '../utils/i18n';
 
 export default function MainScreen() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
   console.log('MainScreen rendered');
+
+  // Force re-render when language changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshKey(prev => prev + 1);
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const navigateToStudents = () => {
     console.log('Navigating to students screen');
@@ -25,9 +38,11 @@ export default function MainScreen() {
 
   return (
     <SafeAreaView style={commonStyles.wrapper}>
+      <LanguageSwitcher />
+      
       <View style={commonStyles.header}>
-        <Text style={commonStyles.title}>Attendance Tracker</Text>
-        <Text style={commonStyles.textSecondary}>Manage your class attendance easily</Text>
+        <Text style={commonStyles.title}>{t('attendanceTracker')}</Text>
+        <Text style={commonStyles.textSecondary}>{t('manageClassAttendance')}</Text>
       </View>
       
       <ScrollView style={commonStyles.content}>
@@ -35,14 +50,14 @@ export default function MainScreen() {
           <View style={commonStyles.card}>
             <View style={[commonStyles.row, { marginBottom: 12 }]}>
               <Icon name="people" size={24} style={{ color: colors.primary }} />
-              <Text style={commonStyles.subtitle}>Manage Students</Text>
+              <Text style={commonStyles.subtitle}>{t('manageStudents')}</Text>
             </View>
             <Text style={commonStyles.textSecondary}>
-              Add, edit, and view your student list
+              {t('addEditViewStudents')}
             </Text>
             <View style={{ marginTop: 16 }}>
               <Button
-                text="View Students"
+                text={t('viewStudents')}
                 onPress={navigateToStudents}
                 style={buttonStyles.primary}
               />
@@ -52,14 +67,14 @@ export default function MainScreen() {
           <View style={commonStyles.card}>
             <View style={[commonStyles.row, { marginBottom: 12 }]}>
               <Icon name="checkmark-circle" size={24} style={{ color: colors.success }} />
-              <Text style={commonStyles.subtitle}>Take Attendance</Text>
+              <Text style={commonStyles.subtitle}>{t('takeAttendance')}</Text>
             </View>
             <Text style={commonStyles.textSecondary}>
-              Mark students as present or absent for today
+              {t('markStudentsPresent')}
             </Text>
             <View style={{ marginTop: 16 }}>
               <Button
-                text="Take Attendance"
+                text={t('takeAttendance')}
                 onPress={navigateToAttendance}
                 style={buttonStyles.success}
               />
@@ -69,14 +84,14 @@ export default function MainScreen() {
           <View style={commonStyles.card}>
             <View style={[commonStyles.row, { marginBottom: 12 }]}>
               <Icon name="bar-chart" size={24} style={{ color: colors.warning }} />
-              <Text style={commonStyles.subtitle}>View Reports</Text>
+              <Text style={commonStyles.subtitle}>{t('viewReports')}</Text>
             </View>
             <Text style={commonStyles.textSecondary}>
-              See attendance statistics and history
+              {t('seeAttendanceStats')}
             </Text>
             <View style={{ marginTop: 16 }}>
               <Button
-                text="View Reports"
+                text={t('viewReports')}
                 onPress={navigateToReports}
                 style={{ backgroundColor: colors.warning }}
               />

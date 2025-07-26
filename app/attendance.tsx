@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/Button';
 import { commonStyles, buttonStyles, colors } from '../styles/commonStyles';
 import Icon from '../components/Icon';
+import { t } from '../utils/i18n';
 
 interface Student {
   id: string;
@@ -108,7 +109,7 @@ export default function AttendanceScreen() {
     return (
       <SafeAreaView style={commonStyles.wrapper}>
         <View style={[commonStyles.container, commonStyles.centerContent]}>
-          <Text style={commonStyles.text}>Loading...</Text>
+          <Text style={commonStyles.text}>{t('loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -119,12 +120,12 @@ export default function AttendanceScreen() {
       <View style={commonStyles.header}>
         <View style={commonStyles.row}>
           <Button
-            text="← Back"
+            text={t('back')}
             onPress={goBack}
             style={{ backgroundColor: 'transparent', width: 'auto', paddingHorizontal: 0 }}
             textStyle={{ color: colors.primary, fontSize: 16 }}
           />
-          <Text style={commonStyles.title}>Attendance</Text>
+          <Text style={commonStyles.title}>{t('attendance')}</Text>
         </View>
         <Text style={commonStyles.textSecondary}>
           {new Date(today).toLocaleDateString('en-US', { 
@@ -140,25 +141,25 @@ export default function AttendanceScreen() {
         <View style={commonStyles.section}>
           {/* Summary Card */}
           <View style={commonStyles.card}>
-            <Text style={commonStyles.subtitle}>Today's Summary</Text>
+            <Text style={commonStyles.subtitle}>{t('todaysSummary')}</Text>
             <View style={commonStyles.row}>
               <View style={commonStyles.centerContent}>
                 <Text style={[commonStyles.text, { color: colors.success, fontWeight: '600' }]}>
                   {presentCount}
                 </Text>
-                <Text style={commonStyles.textSecondary}>Present</Text>
+                <Text style={commonStyles.textSecondary}>{t('present')}</Text>
               </View>
               <View style={commonStyles.centerContent}>
                 <Text style={[commonStyles.text, { color: colors.error, fontWeight: '600' }]}>
                   {absentCount}
                 </Text>
-                <Text style={commonStyles.textSecondary}>Absent</Text>
+                <Text style={commonStyles.textSecondary}>{t('absent')}</Text>
               </View>
               <View style={commonStyles.centerContent}>
                 <Text style={[commonStyles.text, { fontWeight: '600' }]}>
                   {totalMarked}/{students.length}
                 </Text>
-                <Text style={commonStyles.textSecondary}>Marked</Text>
+                <Text style={commonStyles.textSecondary}>{t('marked')}</Text>
               </View>
             </View>
           </View>
@@ -166,11 +167,11 @@ export default function AttendanceScreen() {
           {students.length === 0 ? (
             <View style={[commonStyles.card, commonStyles.centerContent]}>
               <Icon name="people-outline" size={48} style={{ color: colors.textSecondary, marginBottom: 16 }} />
-              <Text style={commonStyles.text}>No students found</Text>
-              <Text style={commonStyles.textSecondary}>Add students first to take attendance</Text>
+              <Text style={commonStyles.text}>{t('noStudentsFound')}</Text>
+              <Text style={commonStyles.textSecondary}>{t('addStudentsFirst')}</Text>
               <View style={{ marginTop: 16 }}>
                 <Button
-                  text="Add Students"
+                  text={t('addStudents')}
                   onPress={() => router.push('/students')}
                   style={buttonStyles.primary}
                 />
@@ -190,7 +191,7 @@ export default function AttendanceScreen() {
                   
                   <View style={commonStyles.row}>
                     <Button
-                      text="Present"
+                      text={t('present')}
                       onPress={() => markAttendance(student.id, 'present')}
                       style={[
                         { flex: 1, marginRight: 8 },
@@ -201,7 +202,7 @@ export default function AttendanceScreen() {
                       textStyle={status === 'present' ? { color: '#FFFFFF' } : { color: colors.primary }}
                     />
                     <Button
-                      text="Absent"
+                      text={t('absent')}
                       onPress={() => markAttendance(student.id, 'absent')}
                       style={[
                         { flex: 1, marginLeft: 8 },
@@ -227,7 +228,7 @@ export default function AttendanceScreen() {
                         commonStyles.textSecondary,
                         { color: status === 'present' ? colors.success : colors.error }
                       ]}>
-                        Marked as {status}
+                        {t('markedAs')} {status === 'present' ? t('present').toLowerCase() : t('absent').toLowerCase()}
                       </Text>
                     </View>
                   )}
