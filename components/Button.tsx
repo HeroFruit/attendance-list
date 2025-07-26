@@ -6,32 +6,54 @@ interface ButtonProps {
   onPress: () => void;
   style?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle;
-}
-
-export default function Button({ text, onPress, style, textStyle }: ButtonProps) {
-  return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress} activeOpacity={0.7}>
-      <Text style={[styles.buttonText, textStyle]}>{text}</Text>
-    </TouchableOpacity>
-  );
+  disabled?: boolean;
 }
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.primary,
-    padding: 14,
     borderRadius: 8,
-    marginTop: 10,
-    width: '100%',
-    boxShadow: '0px 2px 3.84px rgba(0, 0, 0, 0.25)',
-    elevation: 5,
+    padding: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 4,
+    minHeight: 44,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: '600',
+  },
+  disabled: {
+    backgroundColor: colors.grey,
+    opacity: 0.6,
+  },
+  disabledText: {
+    color: colors.textSecondary,
   },
 });
+
+export default function Button({ text, onPress, style, textStyle, disabled = false }: ButtonProps) {
+  console.log('Button rendered:', text);
+  
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        disabled && styles.disabled,
+        style,
+      ]}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
+      activeOpacity={disabled ? 1 : 0.7}
+    >
+      <Text style={[
+        styles.buttonText,
+        disabled && styles.disabledText,
+        textStyle,
+      ]}>
+        {text}
+      </Text>
+    </TouchableOpacity>
+  );
+}
