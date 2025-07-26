@@ -95,46 +95,6 @@ export default function AttendanceScreen() {
     await saveAttendance(updatedAttendance);
   };
 
-  const clearAllAttendance = () => {
-    Alert.alert(
-      'Clear Attendance',
-      'Are you sure you want to clear all attendance for today?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Clear',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              console.log('Clearing all attendance for today');
-              
-              // Clear the state
-              setTodayAttendance({});
-              
-              // Remove today's attendance from AsyncStorage
-              await AsyncStorage.removeItem(`attendance_${today}`);
-              
-              // Also remove today's records from attendance history
-              const historyKey = 'attendance_history';
-              const storedHistory = await AsyncStorage.getItem(historyKey);
-              if (storedHistory) {
-                const history = JSON.parse(storedHistory);
-                const filteredHistory = history.filter((record: AttendanceRecord) => record.date !== today);
-                await AsyncStorage.setItem(historyKey, JSON.stringify(filteredHistory));
-                console.log('Attendance history updated - removed records for', today);
-              }
-              
-              console.log('All attendance cleared successfully for', today);
-            } catch (error) {
-              console.error('Error clearing attendance:', error);
-              Alert.alert('Error', 'Failed to clear attendance. Please try again.');
-            }
-          },
-        },
-      ]
-    );
-  };
-
   const goBack = () => {
     console.log('Going back to main screen');
     router.back();
@@ -201,15 +161,6 @@ export default function AttendanceScreen() {
                 <Text style={commonStyles.textSecondary}>Marked</Text>
               </View>
             </View>
-            {totalMarked > 0 && (
-              <View style={{ marginTop: 16 }}>
-                <Button
-                  text="Clear All"
-                  onPress={clearAllAttendance}
-                  style={{ backgroundColor: colors.error }}
-                />
-              </View>
-            )}
           </View>
 
           {students.length === 0 ? (
