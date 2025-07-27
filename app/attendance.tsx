@@ -128,11 +128,11 @@ export default function AttendanceScreen() {
           <Text style={commonStyles.title}>{t('attendance')}</Text>
         </View>
         <Text style={commonStyles.textSecondary}>
-          {new Date(today).toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          {new Date(today).toLocaleDateString('de-DE', {
+            weekday: 'long',
+            day: 'numeric'
+            month: 'long',
+            year: 'numeric',
           })}
         </Text>
       </View>

@@ -171,9 +171,9 @@ export default function ReportsScreen() {
                 return (
                   <View key={date} style={[commonStyles.row, { marginVertical: 4 }]}>
                     <Text style={commonStyles.text}>
-                      {new Date(date).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric' 
+                      {new Date(date).toLocaleDateString('de-DE', {
+                        day: 'numeric'
+                        month: 'short',
                       })}
                     </Text>
                     <Text style={commonStyles.textSecondary}>

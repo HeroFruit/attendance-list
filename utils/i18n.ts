@@ -60,8 +60,8 @@ const translations = {
   },
   de: {
     // Main Screen
-    attendanceTracker: 'Anwesenheitstracker',
-    manageClassAttendance: 'Verwalten Sie die Anwesenheit Ihrer Klasse einfach',
+    attendanceTracker: 'Anwesenheitsliste',
+    manageClassAttendance: 'Verwalten Sie die Anwesenheit Ihrer Klasse',
     manageStudents: 'Schüler verwalten',
     addEditViewStudents: 'Schülerliste hinzufügen, bearbeiten und anzeigen',
     viewStudents: 'Schüler anzeigen',
@@ -120,8 +120,8 @@ const translations = {
 const i18n = new I18n(translations);
 
 // Set default locale
-i18n.defaultLocale = 'en';
-i18n.locale = 'en';
+i18n.defaultLocale = 'de';
+i18n.locale = 'de';
 
 // Enable fallbacks
 i18n.enableFallback = true;
